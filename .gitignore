@@ -1,0 +1,8 @@
+*.o
+*.out
+notes.txt
+subject_funcs.txt
+practicing
+*minishell_test*
+notes.txt
+*test*
