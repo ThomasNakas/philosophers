@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 17:27:10 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 20:06:44 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	init_table(int	argc, char **argv, t_table *table)
 	table->n_of_full_philos = 0;
 	table->someone_died = 0;
 	table->start_simulation = 0;
+	table->stop_simulation = 0;
 	if (pthread_mutex_init(&table->thread_print, NULL))
 		return (1);
 	if (pthread_mutex_init(&table->thread_supervisor, NULL))
@@ -51,21 +52,21 @@ int	init_table(int	argc, char **argv, t_table *table)
 	{
 		pthread_mutex_destroy(&table->thread_supervisor);
 		pthread_mutex_destroy(&table->thread_print);
-		return (2);
+		return (3);
 	}
 	if (pthread_mutex_init(&table->min_checker, NULL))
 	{
 		pthread_mutex_destroy(&table->thread_change_die);
 		pthread_mutex_destroy(&table->thread_supervisor);
 		pthread_mutex_destroy(&table->thread_print);
-		return (2);
+		return (4);
 	}
 	if (pthread_mutex_init(&table->change_n_of_full, NULL))
 	{
 		pthread_mutex_destroy(&table->thread_change_die);
 		pthread_mutex_destroy(&table->thread_supervisor);
 		pthread_mutex_destroy(&table->thread_print);
-		return (2);
+		return (5);
 	}
 	table->arr_philos = (t_philo *)malloc(sizeof(t_philo) * table->n_of_philos);
 	if (!table->arr_philos)
@@ -75,7 +76,7 @@ int	init_table(int	argc, char **argv, t_table *table)
 		pthread_mutex_destroy(&table->thread_change_die);
 		pthread_mutex_destroy(&table->thread_supervisor);
 		pthread_mutex_destroy(&table->thread_print);
-		return (3);
+		return (6);
 	}
 	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* table->n_of_philos);
@@ -87,7 +88,7 @@ int	init_table(int	argc, char **argv, t_table *table)
 		pthread_mutex_destroy(&table->thread_supervisor);
 		pthread_mutex_destroy(&table->thread_print);
 		free(table->arr_philos);
-		return (4);
+		return (7);
 	}
 	i = -1;
 	while (++i < table->n_of_philos)
@@ -103,7 +104,7 @@ int	init_table(int	argc, char **argv, t_table *table)
 			pthread_mutex_destroy(&table->thread_print);
 			free(table->arr_philos);
 			free(table->forks);
-			return (5);
+			return (8);
 		}
 	}
 	i = -1;
@@ -126,8 +127,6 @@ int	init_table(int	argc, char **argv, t_table *table)
 			return (i);
 		}
 		table->arr_philos[i].id = i + 1;
-		table->arr_philos[i].he_is_full = 0;
-		table->arr_philos[i].he_is_alive = 1;
 		table->arr_philos[i].meals = 0;
 		table->arr_philos[i].left_fork = table->forks[i];
 		table->arr_philos[i].right_fork
@@ -156,4 +155,33 @@ int	init_table(int	argc, char **argv, t_table *table)
 	pthread_mutex_lock(&table->thread_supervisor);
 	table->start_simulation = 1;
 	pthread_mutex_unlock(&table->thread_supervisor);
+}
+
+int	init_supervisor(int argc, char *argv, t_supervisor *s)
+{
+	int	j;
+
+	if (init_table(argc, argv, s->table))
+		return (1);
+	j = -1;
+	if (pthread_mutex_create(&s->super, NULL, supervisor, NULL))
+	{
+		j = -1;
+		while (++j < s->table->n_of_philos)
+			pthread_mutex_destroy(&s->table->arr_philos[j].routines);
+		j = -1;
+		while (++j < s->table->n_of_philos)
+			pthread_join(&(s->table->arr_philos[j].thread), NULL);
+		free(s->table->arr_philos);
+		j = -1;
+		while (++j < s->table->n_of_philos)
+			pthread_mutex_destroy(&s->table->forks[j]);
+		free(s->table->forks);
+		pthread_mutex_destroy(&s->table->change_n_of_full);
+		pthread_mutex_destroy(&s->table->min_checker);
+		pthread_mutex_destroy(&s->table->thread_change_die);
+		pthread_mutex_destroy(&s->table->thread_print);
+		pthread_mutex_destroy(&s->table->thread_supervisor);
+		return (j);
+	}
 }

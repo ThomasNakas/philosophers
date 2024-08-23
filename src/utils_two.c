@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 16:46:13 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 20:03:20 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	check_ms(int x, int y, int z)
 		|| big_sixty_ms(y) 
 		|| big_sixty_ms(z));
 }
+
 void	safe_destroy(t_table *table, int num)
 {
 	int	i;
@@ -30,4 +31,13 @@ void	safe_destroy(t_table *table, int num)
 	i = -1;
 	while (++i < num)
 		pthread_mutex_destroy(&table->forks[i]);
+}
+
+void	ft_sleep(long long routine_time)
+{
+	long long	start;
+
+	start = get_time_ms();
+	while (get_time_ms() - start < routine_time)
+		usleep(200);
 }

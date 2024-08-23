@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 17:27:02 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 20:04:12 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ typedef struct s_philo
 	pthread_mutex_t	routines;
 
 	int				meals;
-	int				he_is_full;
-	int				he_is_alive;
+	long long		lifespan;
 
 	t_table			*table;
 }	t_philo;
+
+typedef struct s_supervisor
+{
+	pthread_t			super;
+	t_table				*table;
+}	t_supervisor;
 
 typedef struct s_table
 {
@@ -52,10 +57,10 @@ typedef struct s_table
 	int					n_of_full_philos;
 	int					someone_died;
 	int					start_simulation;
+	int					stop_simulation;
 
 	pthread_mutex_t		thread_print;
-	//------monitoring thread-------------
-	//------change it to thread-----------
+
 	pthread_mutex_t		thread_supervisor;
 	pthread_mutex_t		min_checker;
 	pthread_mutex_t		change_n_of_full;
@@ -74,7 +79,10 @@ typedef enum e_print
 
 //----------------INIT--------------------
 int			init_table(int argc, char **argv, t_table *table);
+int			init_supervisor(int argc, char *argv, t_supervisor *s);
 //----------------ROUTINE-----------------
+void		*routine(void *arg);
+void		*supervisor(void *arg);
 //----------------UTILS_ONE---------------
 long long	get_time_ms(void);
 long		ft_p_atol(char *str);
@@ -82,4 +90,5 @@ void		print_with_enum(t_philo *philo, t_print mes);
 //----------------UTILS_TWO---------------
 int			big_sixty_ms(int a);
 int			check_ms(int x, int y, int z);
+void		ft_sleep(long long routine_time);
 #endif
