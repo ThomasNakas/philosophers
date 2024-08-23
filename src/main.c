@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:37 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/15 00:58:16 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 01:47:28 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	int		i;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -25,10 +24,11 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_data(&data, argc, argv);
-	init_philo(&data);
-	i = -1;
-	while (i < data.n_of_philos)
-		pthread_join(data.philos[++i].thread, NULL);
-	free_data(&data);
-	return (0);
+	// init_philo(&data);
+	// i = -1;
+	// while (i < data.n_of_philos)
+	// 	pthread_join(data.philos[++i].thread, NULL);
+	// free_data(&data);
+	(void)(argc);
+	return (printf("%d\n", (int)ft_p_atol(argv[1])));
 }
