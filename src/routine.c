@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 20:05:06 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 21:49:59 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void	*supervisor(void *arg)
 		pthread_mutex_lock(&s->table->thread_supervisor);
 		if (s->table->die <= s->table->arr_philos[i].lifespan)
 		{
+			pthread_mutex_lock(&s->table->thread_print);
+			print_with_enum(&s->table->arr_philos[i], DEAD);
+			pthread_mutex_unlock(&s->table->thread_print);
 			pthread_mutex_lock(&s->table->thread_change_die);
 			s->table->someone_died = 1;
 			pthread_mutex_unlock(&s->table->thread_change_die);
@@ -86,13 +89,61 @@ void	*routine(void *arg)
 		philo->meals++;
 		pthread_mutex_unlock(&philo->routines);
 		pthread_mutex_lock(&philo->routines);
+		if (philo->table->stop_simulation == 1)
+			break ;
+		pthread_mutex_unlock(&philo->routines);
+		pthread_mutex_lock(&philo->routines);
 		philo->lifespan = get_time_ms() - philo->table->start_simulation;
 		pthread_mutex_unlock(&philo->routines);
 		pthread_mutex_unlock(&philo->left_fork);
 		pthread_mutex_unlock(&philo->right_fork);
 		pthread_mutex_lock(&philo->table->thread_print);
 		print_with_enum(philo, SLEEP);
-		ft_sleep(philo->table->sleep);
 		pthread_mutex_unlock(&philo->table->thread_print);
+		ft_sleep(philo->table->sleep);
+		pthread_mutex_lock(&philo->routines);
+		if (philo->table->stop_simulation == 1)
+			break ;
+		pthread_mutex_unlock(&philo->routines);
+	}
+}
+
+void	*routine_one(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *) arg;
+	while (true)
+	{
+		pthread_mutex_lock(&philo->table->thread_supervisor);
+		if (&philo->table->start_simulation)
+		{
+			pthread_mutex_ulock(&philo->table->thread_supervisor);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->table->thread_supervisor);
+	}
+	while (true)
+	{
+		pthread_mutex_lock(&philo->table->thread_print);
+		print_with_enum(philo, THINK);
+		pthread_mutex_unlock(&philo->table->thread_print);
+		pthread_mutex_lock(&philo->right_fork);
+		pthread_mutex_lock(&philo->table->thread_print);
+		print_with_enum(philo, FORK);
+		pthread_mutex_unlock(&philo->table->thread_print);
+		pthread_mutex_lock(&philo->routines);
+		philo->lifespan = get_time_ms() + philo->table->start_tv;
+		pthread_mutex_unlock(&philo->routines);
+		ft_sleep(philo->table->die);
+		pthread_mutex_lock(&philo->routines);
+		if (philo->table->stop_simulation == 1)
+		{
+			pthread_mutex_unlock(&philo->right_fork);
+			pthread_mutex_unlock(&philo->routines);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->routines);
+		pthread_mutex_unlock(&philo->right_fork);
 	}
 }
