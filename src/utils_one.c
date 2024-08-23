@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:44 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 01:33:08 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/23 17:46:56 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ long	ft_p_atol(char *str)
 	return (nbr);
 }
 
-void	print_status(t_philo *philo, const char *status)
+//-----------------------MAYBE CHANGE-----------------------------
+void	print_status(t_philo *philo,char *status)
 {
-	pthread_mutex_lock(philo->print_mutex);
-	printf("%lld %d %s\n", get_time_ms() - philo->data->starting_tv,
+	printf("%lld %d %s\n", get_time_ms() - philo->table->start_tv,
 		philo-> id, status);
-	pthread_mutex_unlock(philo->print_mutex);
 }
 
+//-----------------------MAYBE CHANGE------------------------------
 void	print_with_enum(t_philo *philo, t_print mes)
 {
 	if (mes == FORK)
