@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:30:58 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 15:54:17 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # include <sys/time.h>
 #include <stdbool.h>
 # include "../libft/libft.h"
+//---------COLORS-------------------------
+# define RED "\x1b[31m"
+# define GREEN "\x1b[32m"
+# define YELLOW "\x1b[33m"
+# define BLUE "\x1b[24m"
+# define MAGENTA "\x1b[35m"
+# define CYAN "\x1b[36m"
+# define WHITE "\x1b[97m"
+# define RESET "\x1b[0m"
 //---------STRUCTS------------------------
 typedef struct s_table t_table;
 typedef struct s_philo
@@ -33,7 +42,7 @@ typedef struct s_philo
 	pthread_mutex_t	routines;
 
 	int				meals;
-	long long		lifespan;
+	long long		last_eat;
 
 	t_table			*table;
 }	t_philo;
@@ -80,7 +89,7 @@ typedef enum e_print
 
 //----------------INIT--------------------
 int			init_table(int argc, char **argv, t_table *table);
-int	init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table);
+int			init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table);
 int			init_philos(t_table *t);
 //----------------ROUTINE-----------------
 void		*routine(void *arg);

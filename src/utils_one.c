@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:44 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 17:46:56 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:18:56 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	print_status(t_philo *philo,char *status)
 void	print_with_enum(t_philo *philo, t_print mes)
 {
 	if (mes == FORK)
-		print_status(philo, "has taken a fork");
+		print_status(philo, GREEN"has taken a fork"RESET);
 	else if (mes == EAT)
-		print_status(philo, "is eating");
+		print_status(philo, YELLOW"is eating"RESET);
 	else if (mes == SLEEP)
-		print_status(philo, "is sleeping");
+		print_status(philo, BLUE"is sleeping"RESET);
 	else if (mes == THINK)
-		print_status(philo, "is_thinking");
+		print_status(philo, MAGENTA"is_thinking"RESET);
 	else
-		print_status(philo, "died");
+		print_status(philo, RED"died"RESET);
 }

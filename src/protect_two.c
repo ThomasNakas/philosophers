@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:12:15 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:25:13 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	protected_create_one_philo(t_table *t)
 {
 	int	j;
 
-	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine, NULL))
+	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine, &(t->arr_philos[0])))
 	{
 		j = -1;
 		while (++j < t->n_of_philos)
@@ -30,6 +30,7 @@ int	protected_create_one_philo(t_table *t)
 		free(t->forks);
 		return (11 + t->n_of_philos);
 	}
+	pthread_join(t->arr_philos[0].thread, NULL);
 	return (0);
 }
 
@@ -38,9 +39,10 @@ int	protected_create_arr_philos(t_table *t, int i)
 	int	j;
 
 	j = -1;
-	if (pthread_create(&(t->arr_philos[i].thread), NULL, routine, NULL))
+	if (pthread_create(&(t->arr_philos[i].thread), NULL, routine, &(t->arr_philos[i])))
 	{
 		j = -1;
+		printf("here2\n");
 		while (++j < t->n_of_philos)
 			pthread_mutex_destroy(&t->forks[i]);
 		while (--i >= 0)

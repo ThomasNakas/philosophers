@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:23:45 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 14:04:14 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	big_sixty_ms(int a)
 {
-	return (a < 60000);
+	return (a < 60);
 }
 
 int	check_ms(int x, int y, int z)

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 21:53:36 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:35:07 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 15:45:15 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	parsing(int argc, char **argv, t_table *t)
 		return (1);
 	}
 	t->n_of_philos = ft_p_atol(argv[1]);
-	t->die = ft_p_atol(argv[2]) * 1000;
-	t->eat = ft_p_atol(argv[3]) * 1000;
-	t->sleep = ft_p_atol(argv[4]) * 1000;
+	t->die = ft_p_atol(argv[2]);
+	t->eat = ft_p_atol(argv[3]);
+	t->sleep = ft_p_atol(argv[4]);
 	if (argc == 6)
 		t->min_meals = ft_p_atol(argv[5]);
 	else

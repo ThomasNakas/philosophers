@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:32:34 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 16:22:51 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,55 @@
 
 void	*supervisor(void *arg)
 {
-	t_supervisor	*s;
+	// t_supervisor	*s;
+	t_table			*t;
 	int				i;
 
-	s = (t_supervisor *)arg;
+	// s = (t_supervisor *)arg;
+	t = (t_table *)arg;
 	i = -1;
-	while (++i < s->table->n_of_philos)
+	while (++i < t->n_of_philos)
 	{
-		pthread_mutex_lock(&s->table->thread_supervisor);
-		if (s->table->die <= s->table->arr_philos[i].lifespan)
+		pthread_mutex_lock(&t->thread_supervisor);
+		if (t->die <= get_time_ms() - t->arr_philos[i].last_eat)
 		{
-			pthread_mutex_lock(&s->table->thread_print);
-			print_with_enum(&s->table->arr_philos[i], DEAD);
-			pthread_mutex_unlock(&s->table->thread_print);
-			pthread_mutex_lock(&s->table->thread_change_die);
-			s->table->someone_died = 1;
-			pthread_mutex_unlock(&s->table->thread_change_die);
-			pthread_mutex_unlock(&s->table->thread_supervisor);
-			s->table->stop_simulation = 1;
+			pthread_mutex_lock(&t->thread_print);
+			print_with_enum(&t->arr_philos[i], DEAD);
+			pthread_mutex_unlock(&t->thread_print);
+			pthread_mutex_unlock(&t->thread_supervisor);
+			pthread_mutex_lock(&t->thread_supervisor);
+			t->stop_simulation = 1;
+			pthread_mutex_unlock(&t->thread_supervisor);
 			break ;
 		}
-		pthread_mutex_unlock(&s->table->thread_supervisor);
-		pthread_mutex_lock(&s->table->min_checker);
-		if (s->table->min_meals != -1)
+		pthread_mutex_unlock(&t->thread_supervisor);
+		pthread_mutex_lock(&t->min_checker);
+		if (t->min_meals != -1)
 		{
-			if (s->table->min_meals <= s->table->arr_philos[i].meals)
-				s->table->n_of_full_philos++;
+			if (t->min_meals <= t->arr_philos[i].meals)
+				t->n_of_full_philos++;
 		}
-		pthread_mutex_unlock(&s->table->min_checker);
+		pthread_mutex_unlock(&t->min_checker);
 	}
-	if (s->table->min_meals != -1
-		&& s->table->n_of_philos == s->table->n_of_full_philos)
-		s->table->stop_simulation = 1;
+	if (t->min_meals != -1
+		&& t->n_of_philos == t->n_of_full_philos)
+		t->stop_simulation = 1;
+	usleep(1000); // Add a small delay to reduce CPU usage
 	return (NULL);
 }
-
 void	*routine(void *arg)
 {
 	t_philo	*philo;
-
 	philo = (t_philo *) arg;
 	while (true)
 	{
-		pthread_mutex_lock(&philo->table->thread_supervisor);
+		pthread_mutex_lock(&philo->routines);
 		if (philo->table->start_simulation)
 		{
-			pthread_mutex_unlock(&philo->table->thread_supervisor);
+			pthread_mutex_unlock(&philo->routines);
 			break ;
 		}
-		pthread_mutex_unlock(&philo->table->thread_supervisor);
+		pthread_mutex_unlock(&philo->routines);
 	}
 	if (philo->id % 2 == 0)
 		ft_sleep(philo->table->eat / 2);
@@ -84,14 +84,14 @@ void	*routine(void *arg)
 		pthread_mutex_unlock(&philo->table->thread_print);
 		ft_sleep(philo->table->eat);
 		pthread_mutex_lock(&philo->routines);
+		philo->last_eat = get_time_ms();
+		pthread_mutex_unlock(&philo->routines);
+		pthread_mutex_lock(&philo->routines);
 		philo->meals++;
 		pthread_mutex_unlock(&philo->routines);
 		pthread_mutex_lock(&philo->routines);
 		if (philo->table->stop_simulation == 1)
 			break ;
-		pthread_mutex_unlock(&philo->routines);
-		pthread_mutex_lock(&philo->routines);
-		philo->lifespan = get_time_ms() - philo->table->start_simulation;
 		pthread_mutex_unlock(&philo->routines);
 		pthread_mutex_unlock(&philo->left_fork);
 		pthread_mutex_unlock(&philo->right_fork);
@@ -103,6 +103,7 @@ void	*routine(void *arg)
 		if (philo->table->stop_simulation == 1)
 			break ;
 		pthread_mutex_unlock(&philo->routines);
+		ft_sleep(100);
 	}
 	return (NULL);
 }
@@ -132,9 +133,9 @@ void	*routine_one(void *arg)
 		print_with_enum(philo, FORK);
 		pthread_mutex_unlock(&philo->table->thread_print);
 		pthread_mutex_lock(&philo->routines);
-		philo->lifespan = get_time_ms() + philo->table->start_tv;
+		philo->last_eat = get_time_ms() + philo->table->die;
 		pthread_mutex_unlock(&philo->routines);
-		ft_sleep(philo->table->die);
+		supervisor(philo->table);
 		pthread_mutex_lock(&philo->routines);
 		if (philo->table->stop_simulation == 1)
 		{
