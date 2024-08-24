@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:08:40 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:30:29 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	init_table(int argc, char **argv, t_table *table)
 {
-	int	i;
-	int	j;
-
 	if(parsing(argc, argv, table)
 	|| protected_init_from_print_to_change_die(table)
 	|| protected_init_change_of_full(table)
@@ -62,9 +59,9 @@ int	init_philos(t_table *t)
 	return (0);
 }
 
-int	init_supervisor(int argc, char **argv, t_supervisor *s)
+int	init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table)
 {
-
+	s->table = table;
 	if (init_table(argc, argv, s->table))
 		return (4);
 	if (pthread_create(&s->super, NULL, supervisor, (void *)s->table->arr_philos))

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:12:37 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:32:34 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,10 @@
 void	*supervisor(void *arg)
 {
 	t_supervisor	*s;
-	int				n;
 	int				i;
-	int				full;
 
 	s = (t_supervisor *)arg;
 	i = -1;
-	full = 0;
 	while (++i < s->table->n_of_philos)
 	{
 		pthread_mutex_lock(&s->table->thread_supervisor);

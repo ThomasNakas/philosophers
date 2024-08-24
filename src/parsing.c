@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 21:53:36 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:07:06 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:35:07 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parsing(int argc, char **argv, t_table *t)
 		t->min_meals = -1;
 	if (t->n_of_philos <= 0 || t->die == 1
 		|| t->eat == 1 || t->sleep == 1
-		|| t->min_meals <= 0
+		|| t->min_meals == 0
 		|| check_ms(t->die, t->eat, t->sleep))
 		return (2);
 	t->n_of_full_philos = 0;

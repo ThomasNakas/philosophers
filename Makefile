@@ -6,14 +6,13 @@
 #    By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/04 13:02:26 by tnakas            #+#    #+#              #
-#    Updated: 2024/08/24 04:07:03 by tnakas           ###   ########.fr        #
+#    Updated: 2024/08/24 12:29:08 by tnakas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-# -g -Wall -Wextra -Werror
-CFLAGS = -I. -I$(LIBFT_DIR)
+CFLAGS = -g -Wall -Wextra -Werror -I. -I$(LIBFT_DIR)
 LIBFT_DIR = libft
 
 SRC = src/init.c src/main.c src/parsing.c src/protect_one.c src/protect_two.c \
