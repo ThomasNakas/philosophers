@@ -4,12 +4,12 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug Minishell",
+            "name": "Debug Philo",
             "program": "${workspaceFolder}/philo",  // Path to your binary
-            "args": [],
+            "args": ["0", "200", "50", "50"],
             "cwd": "${workspaceFolder}",  // Root of your project
             "preLaunchTask": "C/C++: clang build active file",  // Optional: triggers build task before debugging
-            "stopOnEntry": false,  // Set true if you want the debugger to stop at the entry point
+            "stopOnEntry": true,  // Set true if you want the debugger to stop at the entry point
         }
     ]
 }

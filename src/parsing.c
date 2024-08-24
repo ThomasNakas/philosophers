@@ -6,14 +6,14 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 21:53:36 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 21:57:06 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:07:06 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 
-void	parsing(int argc, char **argv, t_table *t)
+int	parsing(int argc, char **argv, t_table *t)
 {
 	if (argc < 5 || argc > 6)
 	{
@@ -39,4 +39,5 @@ void	parsing(int argc, char **argv, t_table *t)
 	t->someone_died = 0;
 	t->start_simulation = 0;
 	t->stop_simulation = 0;
+	return (0);
 }

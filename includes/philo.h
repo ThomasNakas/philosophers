@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 20:04:12 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:06:37 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <stdbool.h>
 # include "../libft/libft.h"
 //---------STRUCTS------------------------
+typedef struct s_table t_table;
 typedef struct s_philo
 {
 	int				id;
@@ -43,7 +44,7 @@ typedef struct s_supervisor
 	t_table				*table;
 }	t_supervisor;
 
-typedef struct s_table
+struct s_table
 {
 	long long			start_tv;
 	t_philo				*arr_philos;
@@ -66,7 +67,7 @@ typedef struct s_table
 	pthread_mutex_t		change_n_of_full;
 	pthread_mutex_t		thread_change_die;
 	pthread_mutex_t		*forks;
-}	t_table;
+} ;
 //---------ENUMARATORS--------------------
 typedef enum e_print
 {
@@ -79,10 +80,13 @@ typedef enum e_print
 
 //----------------INIT--------------------
 int			init_table(int argc, char **argv, t_table *table);
-int			init_supervisor(int argc, char *argv, t_supervisor *s);
+int			init_supervisor(int argc, char **argv, t_supervisor *s);
+int			init_philos(t_table *t);
 //----------------ROUTINE-----------------
 void		*routine(void *arg);
 void		*supervisor(void *arg);
+//----------------PARSING-----------------
+int			parsing(int argc, char **argv, t_table *t);
 //----------------UTILS_ONE---------------
 long long	get_time_ms(void);
 long		ft_p_atol(char *str);
@@ -91,4 +95,15 @@ void		print_with_enum(t_philo *philo, t_print mes);
 int			big_sixty_ms(int a);
 int			check_ms(int x, int y, int z);
 void		ft_sleep(long long routine_time);
+//----------------PROTECTED_ONE------------
+int			protected_init_from_print_to_change_die(t_table *t);
+int			protected_init_change_of_full(t_table *t);
+int			protected_malloc_arr_philos(t_table *t);
+int			protected_malloc_arr_forks(t_table *t);
+int			protected_init_arr_forks(t_table *t);
+//----------------PROTECTED_TWO------------
+int			protected_create_one_philo(t_table *t);
+int			protected_create_arr_philos(t_table *t, int i);
+int			protected_mutex_init(t_table *t, int i);
+int			protected_mutex_init_supervisor(t_supervisor *s);
 #endif

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 21:49:59 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:12:37 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ void	*supervisor(void *arg)
 		pthread_mutex_unlock(&s->table->min_checker);
 	}
 	if (s->table->min_meals != -1
-		&& s->table->n_of_full_philos == s->table->n_of_full_philos)
+		&& s->table->n_of_philos == s->table->n_of_full_philos)
 		s->table->stop_simulation = 1;
+	return (NULL);
 }
 
 void	*routine(void *arg)
@@ -59,9 +60,9 @@ void	*routine(void *arg)
 	while (true)
 	{
 		pthread_mutex_lock(&philo->table->thread_supervisor);
-		if (&philo->table->start_simulation)
+		if (philo->table->start_simulation)
 		{
-			pthread_mutex_ulock(&philo->table->thread_supervisor);
+			pthread_mutex_unlock(&philo->table->thread_supervisor);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->table->thread_supervisor);
@@ -106,6 +107,7 @@ void	*routine(void *arg)
 			break ;
 		pthread_mutex_unlock(&philo->routines);
 	}
+	return (NULL);
 }
 
 void	*routine_one(void *arg)
@@ -116,9 +118,9 @@ void	*routine_one(void *arg)
 	while (true)
 	{
 		pthread_mutex_lock(&philo->table->thread_supervisor);
-		if (&philo->table->start_simulation)
+		if (philo->table->start_simulation)
 		{
-			pthread_mutex_ulock(&philo->table->thread_supervisor);
+			pthread_mutex_unlock(&philo->table->thread_supervisor);
 			break ;
 		}
 		pthread_mutex_unlock(&philo->table->thread_supervisor);
@@ -146,4 +148,5 @@ void	*routine_one(void *arg)
 		pthread_mutex_unlock(&philo->routines);
 		pthread_mutex_unlock(&philo->right_fork);
 	}
+	return (NULL);
 }

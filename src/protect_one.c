@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   protect.c                                          :+:      :+:    :+:   */
+/*   protect_one.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 01:33:25 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/23 22:12:33 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 12:00:39 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	protected_init_from_print_to_change_die(t_table *t)
 		pthread_mutex_destroy(&t->thread_print);
 		return (6);
 	}
+	return (0);
 }
 
 int	protected_init_change_of_full(t_table *t)
@@ -45,6 +46,7 @@ int	protected_init_change_of_full(t_table *t)
 		pthread_mutex_destroy(&t->thread_print);
 		return (7);
 	}
+	return (0);
 }
 
 int	protected_malloc_arr_philos(t_table *t)
@@ -59,6 +61,7 @@ int	protected_malloc_arr_philos(t_table *t)
 		pthread_mutex_destroy(&t->thread_print);
 		return (8);
 	}
+	return (0);
 }
 
 int	protected_malloc_arr_forks(t_table *t)
@@ -75,6 +78,7 @@ int	protected_malloc_arr_forks(t_table *t)
 		free(t->arr_philos);
 		return (9);
 	}
+	return (0);
 }
 
 int	protected_init_arr_forks(t_table *t)
@@ -98,4 +102,5 @@ int	protected_init_arr_forks(t_table *t)
 			return (i + 10);
 		}
 	}
+	return (0);
 }
