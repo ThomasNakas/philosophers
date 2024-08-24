@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 15:27:57 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:53:36 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ int	init_table(int argc, char **argv, t_table *table)
 		return (1);
 	table->start_simulation = 1;
 	table->start_tv = get_time_ms();
+	table->print_flag = 0;
 	if (table->n_of_full_philos == 1)
 	{
+		printf("here is one\n");
 		if (protected_create_one_philo(table))
 			return (2);
 	}
@@ -33,8 +35,6 @@ int	init_table(int argc, char **argv, t_table *table)
 		if (init_philos(table))
 			return (3);
 	}
-	pthread_mutex_lock(&table->thread_supervisor);
-	pthread_mutex_unlock(&table->thread_supervisor);
 	return (0);
 }
 
@@ -45,30 +45,35 @@ int	init_philos(t_table *t)
 	i = -1;
 	while (++i < t->n_of_philos)
 	{
-		if (protected_create_arr_philos(t, i))
-			return (3);
 		t->arr_philos[i].id = i + 1;
 		t->arr_philos[i].meals = 0;
 		t->arr_philos[i].left_fork = t->forks[i];
 		t->arr_philos[i].right_fork
 			= t->forks[t->arr_philos[i].id % t->n_of_philos];
 		t->arr_philos[i].table = t;
+		t->arr_philos[i].last_eat = 0;
+		t->arr_philos[i].run = 1;
+		t->arr_philos[i].is_counted = 0;
+		if (protected_create_arr_philos(t, i))
+			return (3);
 		if (protected_mutex_init(t, i))
 			return (4);
 	}
-	i = -1;
-	while (++i < t->n_of_philos)
-		pthread_join(t->arr_philos[i].thread, NULL);
 	return (0);
 }
 
 int	init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table)
 {
+	int	i;
+
 	s->table = table;
 	if (init_table(argc, argv, s->table))
 		return (4);
 	if (pthread_create(&s->super, NULL, supervisor, (void *)s->table))
 		return (protected_mutex_init_supervisor(s));
+	i = -1;
+	while (++i < s->table->n_of_philos)
+		pthread_join(s->table->arr_philos[i].thread, NULL);
 	pthread_join(s->super, NULL);
 	return (0);
 	//join threads

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 14:04:14 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 18:04:08 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,9 @@ void	ft_sleep(long long routine_time)
 	start = get_time_ms();
 	while (get_time_ms() - start < routine_time)
 		usleep(200);
+}
+
+long long max(long long a, long long b)
+{
+	return(a * (a >= b) + b * (a < b));
 }

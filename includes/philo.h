@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 15:54:17 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:19:12 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ typedef struct s_philo
 	pthread_mutex_t	routines;
 
 	int				meals;
+	int				run;
 	long long		last_eat;
+	long long		prev_last;
+	int				is_counted;
 
 	t_table			*table;
 }	t_philo;
@@ -63,6 +66,8 @@ struct s_table
 	long long			eat;
 	long long			sleep;
 	int					min_meals;
+
+	int					print_flag;
 
 	int					n_of_full_philos;
 	int					someone_died;
@@ -104,6 +109,7 @@ void		print_with_enum(t_philo *philo, t_print mes);
 int			big_sixty_ms(int a);
 int			check_ms(int x, int y, int z);
 void		ft_sleep(long long routine_time);
+long long 	max(long long a, long long b);
 //----------------PROTECTED_ONE------------
 int			protected_init_from_print_to_change_die(t_table *t);
 int			protected_init_change_of_full(t_table *t);
