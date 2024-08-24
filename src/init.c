@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 19:53:36 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:58:07 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	init_table(int argc, char **argv, t_table *table)
 	table->print_flag = 0;
 	if (table->n_of_full_philos == 1)
 	{
-		printf("here is one\n");
 		if (protected_create_one_philo(table))
 			return (2);
 	}
