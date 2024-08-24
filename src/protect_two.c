@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 18:32:25 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 20:33:35 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,25 @@ int	protected_mutex_init_supervisor(t_supervisor *s)
 	pthread_mutex_destroy(&s->table->thread_print);
 	pthread_mutex_destroy(&s->table->thread_supervisor);
 	return (j + 14 + 3 * (s->table->n_of_philos));
+}
+
+int	final_clean(t_table *table)
+{
+	int	j;
+
+	j = -1;
+	while (++j < table->n_of_philos)
+		pthread_mutex_destroy(&table->arr_philos[j].routines);
+	j = -1;
+	free(table->arr_philos);
+	j = -1;
+	while (++j < table->n_of_philos)
+		pthread_mutex_destroy(&table->forks[j]);
+	free(table->forks);
+	pthread_mutex_destroy(&table->change_n_of_full);
+	pthread_mutex_destroy(&table->min_checker);
+	pthread_mutex_destroy(&table->thread_change_die);
+	pthread_mutex_destroy(&table->thread_print);
+	pthread_mutex_destroy(&table->thread_supervisor);
+	return (j + 14 + 3 * (table->n_of_philos));
 }

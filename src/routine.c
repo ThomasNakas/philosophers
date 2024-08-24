@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 19:55:58 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 20:36:14 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	*supervisor(void *arg)
 	usleep(1000); // Add a small delay to reduce CPU usage
 	return (NULL);
 }
+
 void	*routine(void *arg)
 {
 	t_philo	*philo;

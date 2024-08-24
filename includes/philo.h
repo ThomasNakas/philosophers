@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 19:19:12 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 20:34:37 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef enum e_print
 //----------------INIT--------------------
 int			init_table(int argc, char **argv, t_table *table);
 int			init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table);
-int			init_philos(t_table *t);
+int			init_many_philos(t_table *t);
 //----------------ROUTINE-----------------
 void		*routine(void *arg);
 void		*supervisor(void *arg);
@@ -121,4 +121,5 @@ int			protected_create_one_philo(t_table *t);
 int			protected_create_arr_philos(t_table *t, int i);
 int			protected_mutex_init(t_table *t, int i);
 int			protected_mutex_init_supervisor(t_supervisor *s);
+int			final_clean(t_table *table);
 #endif

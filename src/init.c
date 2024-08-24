@@ -6,11 +6,27 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 19:58:07 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 20:28:40 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+int	init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table)
+{
+	int	i;
+
+	s->table = table;
+	if (init_table(argc, argv, s->table))
+		return (4);
+	if (pthread_create(&s->super, NULL, supervisor, (void *)s->table))
+		return (protected_mutex_init_supervisor(s));
+	i = -1;
+	while (++i < s->table->n_of_philos)
+		pthread_join(s->table->arr_philos[i].thread, NULL);
+	pthread_join(s->super, NULL);
+	return (0);
+}
 
 int	init_table(int argc, char **argv, t_table *table)
 {
@@ -31,13 +47,13 @@ int	init_table(int argc, char **argv, t_table *table)
 	}
 	else
 	{
-		if (init_philos(table))
+		if (init_many_philos(table))
 			return (3);
 	}
 	return (0);
 }
 
-int	init_philos(t_table *t)
+int	init_many_philos(t_table *t)
 {
 	int	i;
 
@@ -61,19 +77,3 @@ int	init_philos(t_table *t)
 	return (0);
 }
 
-int	init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table)
-{
-	int	i;
-
-	s->table = table;
-	if (init_table(argc, argv, s->table))
-		return (4);
-	if (pthread_create(&s->super, NULL, supervisor, (void *)s->table))
-		return (protected_mutex_init_supervisor(s));
-	i = -1;
-	while (++i < s->table->n_of_philos)
-		pthread_join(s->table->arr_philos[i].thread, NULL);
-	pthread_join(s->super, NULL);
-	return (0);
-	//join threads
-}
