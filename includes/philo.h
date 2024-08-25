@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:26:10 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:33:33 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		*supervisor(void *arg);
 //----------------ROUTINE_PHILOS_UTILS------
 void		philos_main_routine(t_philo *philo);
 void		philos_wait_to_start(t_philo *philo);
-int 		should_stop_simulation(t_table *table);
+int			should_stop_simulation(t_table *table);
 void		update_last_time_meal(t_philo *philo);
 //----------------ROUTINE_SUPERVISOR--------
 void		meals_update(t_table *t, int i);
@@ -133,7 +133,7 @@ void		print_with_enum(t_philo *philo, t_print mes);
 //----------------UTILS_TWO---------------
 int			big_sixty_ms(int a);
 int			check_ms(int x, int y, int z);
-void		print_thread_routine (t_philo *philo, t_print PRINT);
+void		print_thread_routine(t_philo *philo, t_print PRINT);
 void		ft_sleep(long long routine_time);
 long long 	max(long long a, long long b);
 //----------------UTILS_THREE-------------
