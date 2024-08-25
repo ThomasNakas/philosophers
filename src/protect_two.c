@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:29:09 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:06:15 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,13 +125,15 @@ int	final_clean(t_table *table)
 
 	j = -1;
 	while (++j < table->n_of_philos)
-		pthread_mutex_destroy(&table->arr_philos[table->n_of_philos - j - 1].routines);
-	j = -1;
-	free(table->arr_philos);
+		pthread_mutex_destroy(&table->arr_philos[table->n_of_philos
+			- j - 1].routines);
+	if (table->arr_philos)
+		free(table->arr_philos);
 	j = -1;
 	while (++j < table->n_of_philos)
 		pthread_mutex_destroy(&table->forks[table->n_of_philos - j - 1]);
-	free(table->forks);
+	if (table->forks)
+		free(table->forks);
 	pthread_mutex_destroy(&table->change_n_of_full);
 	pthread_mutex_destroy(&table->min_checker);
 	pthread_mutex_destroy(&table->thread_print);

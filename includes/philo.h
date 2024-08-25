@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:33:33 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:06:09 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		update_last_time_meal(t_philo *philo);
 void		meals_update(t_table *t, int i);
 void		died_cond_and_meals_update(t_table *t);
 void		*supervisor(void *arg);
-void		died_condition(t_table *t, int	i);
+void		died_condition(t_table *t, int i);
 //----------------UTILS_ONE---------------
 long long	get_time_ms(void);
 long		ft_p_atol(char *str);

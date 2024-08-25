@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:37 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 20:34:24 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:08:04 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_table			table;
 	t_supervisor	s;
 
-	init_supervisor(argc, argv, &s, &table);
-	final_clean(&table);
+	if (!init_supervisor(argc, argv, &s, &table))
+		final_clean(&table);
 	return (0);
 }
