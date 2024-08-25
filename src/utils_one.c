@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:44 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:30:03 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 17:24:12 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ long	ft_p_atol(char *str)
 		i++;
 	}
 	if (str[i] != '\0' || nbr > (long long)INT_MAX)
+	{
+		pritnf("Your input is not valid. Try to give a positive"
+			" integer with only numbers!");
 		return (-1);
+	}
 	return (nbr);
 }
 

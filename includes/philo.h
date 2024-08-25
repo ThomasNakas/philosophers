@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 07:24:18 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 17:50:16 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_philo
 	int				left_fork;
 	pthread_mutex_t	routines;
 	int				meals;
-	int				run;
 	long long		start_time;
 	long long		last_time_meal;
 	int				is_counted;

@@ -6,7 +6,7 @@
 #    By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/04 13:02:26 by tnakas            #+#    #+#              #
-#    Updated: 2024/08/24 23:41:40 by tnakas           ###   ########.fr        #
+#    Updated: 2024/08/25 07:45:41 by tnakas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ CFLAGS = -g -Wall -Wextra -Werror -I.
 SRC = src/init.c src/main.c src/parsing.c src/protect_one.c src/protect_two.c \
 		src/routine_philos.c src/routine_philos_utils.c \
 		src/routine_supervisor.c src/utils_one.c src/utils_two.c \
-		src/utils_three.c \
 
 OBJ = $(SRC:.c=.o)
 
