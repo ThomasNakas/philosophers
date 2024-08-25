@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 21:53:36 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 17:48:26 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 22:45:51 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	parsing(int argc, char **argv, t_table *t)
 {
 	if (argc < 5 || argc > 6)
 	{
-		printf("%s [number_of_philosophers] [time_to_die] "
-			"[time_to_eat time_to_sleep] [number_of_times_each"
-			"_philosopher_must_eat]\n", argv[0]);
+		printf("[number_of_philosophers] | [time_to_die] "
+			"| [time_to_eat time_to_sleep] | [number_of_times_each"
+			"_philosopher_must_eat]\n");
 		return (1);
 	}
 	t->n_of_philos = ft_p_atol(argv[1]);
