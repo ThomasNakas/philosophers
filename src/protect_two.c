@@ -6,40 +6,41 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 18:09:13 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 22:16:05 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	protected_create_one_philo(t_table *t)
-{
-	int	j;
+// int	protected_create_one_philo(t_table *t)
+// {
+// 	int	j;
 
-	j = -1;
-	t->arr_philos[0].id = 1;
-	t->arr_philos[0].meals = 0;
-	t->arr_philos[0].left_fork = 0;
-	t->arr_philos[0].table = t;
-	t->arr_philos[0].last_time_meal = get_time_ms();
-	t->arr_philos[0].is_counted = 0;
-	if (pthread_create(&(t->arr_philos[0].thread),
-			NULL, routine_one, &(t->arr_philos[0])))
-	{
-		j = t->n_of_philos;
-		while (--j >= 0)
-			pthread_mutex_destroy(&t->forks[j]);
-		free(t->forks);
-		free(t->arr_philos);
-		pthread_mutex_destroy(&t->change_n_of_full);
-		pthread_mutex_destroy(&t->min_checker);
-		pthread_mutex_destroy(&t->thread_supervisor);
-		pthread_mutex_destroy(&t->thread_print);
-		printf("Error: Thread(s) creation failed");
-		return (11 + t->n_of_philos);
-	}
-	return (0);
-}
+// 	j = -1;
+// 	t->arr_philos[0].id = 1;
+// 	t->arr_philos[0].meals = 0;
+// 	t->arr_philos[0].left_fork = 0;
+// 	t->arr_philos[0].table = t;
+// 	t->arr_philos[0].last_time_meal = get_time_ms();
+// 	t->arr_philos[0].is_counted = 0;
+// 	if (pthread_create(&(t->arr_philos[0].thread),
+// 			NULL, routine_one, &(t->arr_philos[0])))
+// 	{
+// 		j = t->n_of_philos;
+// 		while (--j >= 0)
+// 			pthread_mutex_destroy(&t->forks[j]);
+// 		free(t->forks);
+// 		free(t->arr_philos);
+// 		pthread_mutex_destroy(&t->change_n_of_full);
+// 		pthread_mutex_destroy(&t->min_checker);
+// 		pthread_mutex_destroy(&t->thread_supervisor);
+// 		pthread_mutex_destroy(&t->thread_print);
+// 		printf("Error: Thread(s) creation failure");
+// 		return (11 + t->n_of_philos);
+// 	}
+// 	pthread_join(t->arr_philos[0].thread, NULL);
+// 	return (0);
+// }
 
 int	protected_mutex_init(t_table *t, int i)
 {
@@ -62,7 +63,7 @@ int	protected_mutex_init(t_table *t, int i)
 		pthread_mutex_destroy(&t->min_checker);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);
-		printf("Error: Mutexes initialization failed");
+		printf("Error: Mutexes initialization failure");
 		return (i + 13 + 3 * (t->n_of_philos));
 	}
 	return (0);
@@ -91,7 +92,7 @@ int	protected_create_arr_philos(t_table *t, int i)
 		pthread_mutex_destroy(&t->min_checker);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);
-		printf("Error: Threads creation failed");
+		printf("Error: Threads creation failure");
 		return (i + 12 + 2 * (t->n_of_philos));
 	}
 	return (0);
@@ -117,7 +118,7 @@ int	protected_mutex_init_supervisor(t_supervisor *s)
 	pthread_mutex_destroy(&s->table->min_checker);
 	pthread_mutex_destroy(&s->table->thread_supervisor);
 	pthread_mutex_destroy(&s->table->thread_print);
-	printf("Error: Threads creation failed");
+	printf("Error: Threads creation failure");
 	return (j + 14 + 3 * (s->table->n_of_philos));
 }
 
@@ -140,5 +141,5 @@ int	final_clean(t_table *table)
 	pthread_mutex_destroy(&table->min_checker);
 	pthread_mutex_destroy(&table->thread_print);
 	pthread_mutex_destroy(&table->thread_supervisor);
-	return (j + 14 + 3 * (table->n_of_philos));
+	return (0);
 }

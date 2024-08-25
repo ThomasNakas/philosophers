@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 17:50:16 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 21:41:57 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int			protected_mutex_init_supervisor(t_supervisor *s);
 int			final_clean(t_table *table);
 //----------------ROUTINE_PHILOS-----------
 void		*routine(void *arg);
-void		*routine_one(void *arg);
+// void		*routine_one(void *arg);
 void		*supervisor(void *arg);
 //----------------ROUTINE_PHILOS_UTILS------
 void		philos_main_routine(t_philo *philo);

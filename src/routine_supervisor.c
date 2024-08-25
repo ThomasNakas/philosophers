@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 16:11:12 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 21:57:16 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	died_condition(t_table *t, int i)
 void	meals_update(t_table *t, int i)
 {
 	pthread_mutex_lock(&t->arr_philos[i].routines);
-	if (t->min_meals <= t->arr_philos[i].meals && i % 2
-		&& t->n_of_philos % 2 != 0)
+	if (t->min_meals <= t->arr_philos[i].meals)
 	{
 		t->n_of_full_philos++;
 		t->arr_philos[i].is_counted = 1;
 		pthread_mutex_lock(&t->thread_supervisor);
-		t->stop_simulation = 1;
+		if (t->n_of_philos == t->n_of_full_philos + 1)
+			t->stop_simulation = 1;
 		pthread_mutex_unlock(&t->thread_supervisor);
 	}
 	pthread_mutex_unlock(&t->arr_philos[i].routines);
@@ -66,6 +66,15 @@ void	*supervisor(void *arg)
 	t_table			*t;
 
 	t = (t_table *)arg;
+	if (t->n_of_philos == 1)
+	{
+		while ((get_time_ms() - t->start_tv) < t->die)
+			;
+		pthread_mutex_lock(&t->thread_print);
+		print_with_enum(&t->arr_philos[0], DEAD);
+		pthread_mutex_unlock(&t->thread_print);
+		return (NULL);
+	}
 	died_cond_and_meals_update(t);
 	if (t->min_meals != -1
 		&& t->n_of_philos == t->n_of_full_philos)

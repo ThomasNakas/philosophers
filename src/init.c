@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 17:50:21 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 22:31:36 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,8 @@ int	init_table(int argc, char **argv, t_table *table)
 	table->start_simulation = 1;
 	table->start_tv = get_time_ms();
 	table->print_flag = 0;
-	if (table->n_of_philos == 1)
-	{
-		if (protected_create_one_philo(table))
-			return (2);
-	}
-	else
-	{
-		if (init_many_philos(table))
-			return (3);
-	}
+	if (init_many_philos(table))
+		return (3);
 	return (0);
 }
 
@@ -62,15 +54,20 @@ int	init_many_philos(t_table *t)
 	{
 		t->arr_philos[i].id = i + 1;
 		t->arr_philos[i].meals = 0;
-		t->arr_philos[i].right_fork = i;
-		t->arr_philos[i].left_fork = (i + 1) % t->n_of_philos;
+		if (i == t->n_of_philos - 1)
+			t->arr_philos[i].left_fork = i;
+		else
+			t->arr_philos[i].right_fork = i;
+		if (i == t->n_of_philos - 1)
+			t->arr_philos[i].right_fork = (i + 1) % t->n_of_philos;
+		else
+			if (t->n_of_philos > 1)
+				t->arr_philos[i].left_fork = (i + 1) % t->n_of_philos;
 		t->arr_philos[i].table = t;
 		t->arr_philos[i].start_time = get_time_ms();
 		t->arr_philos[i].last_time_meal = get_time_ms();
 		t->arr_philos[i].is_counted = 0;
-		if (protected_mutex_init(t, i))
-			return (3);
-		if (protected_create_arr_philos(t, i))
+		if ((protected_mutex_init(t, i)) || protected_create_arr_philos(t, i))
 			return (4);
 	}
 	return (0);
