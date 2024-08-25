@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 01:33:25 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:27:39 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 18:12:02 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	protected_malloc_arr_forks(t_table *t)
 		pthread_mutex_destroy(&t->min_checker);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);
+		printf("Error: Memory allocation failed");
 		return (9);
 	}
 	return (0);
@@ -89,6 +90,7 @@ int	protected_init_arr_forks(t_table *t)
 			pthread_mutex_destroy(&t->min_checker);
 			pthread_mutex_destroy(&t->thread_supervisor);
 			pthread_mutex_destroy(&t->thread_print);
+			printf("Error: Mutexes initialization failed");
 			return (i + 10);
 		}
 	}
