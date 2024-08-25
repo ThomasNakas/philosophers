@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:04:31 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:29:34 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	died_cond_and_meals_update(t_table *t)
 	{
 		pthread_mutex_lock(&t->arr_philos[i].routines);
 		if (get_time_ms() - t->die > t->arr_philos[i].last_time_meal
-		&& (t->print_flag == 0))
+			&& (t->print_flag == 0))
 		{
 			pthread_mutex_unlock(&t->arr_philos[i].routines);
 			died_condition(t, i);

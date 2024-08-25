@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 04:04:24 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:26:10 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,26 @@
 # define RESET "\x1b[0m"
 //---------STRUCTS------------------------
 typedef struct s_table t_table;
+
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
 
-	int right_fork;
-	int left_fork;
+	int 			right_fork;
+	int 			left_fork;
 
 	pthread_mutex_t	routines;
 
 	int				meals;
 	int				run;
 	long long		start_time;
-	long long		update_time;
 	long long		last_time_meal;
 	int				is_counted;
 
 	t_table			*table;
 }	t_philo;
 
-// the counting of time is by supervisor
 typedef struct s_supervisor
 {
 	pthread_t			super;
@@ -61,8 +60,8 @@ typedef struct s_supervisor
 
 struct s_table
 {
-	long long			start_tv;
 	t_philo				*arr_philos;
+	long long			start_tv;
 
 	int					n_of_philos;
 	long long			die;
@@ -78,13 +77,12 @@ struct s_table
 	int					stop_simulation;
 
 	pthread_mutex_t		thread_print;
-
 	pthread_mutex_t		thread_supervisor;
 	pthread_mutex_t		min_checker;
 	pthread_mutex_t		change_n_of_full;
-	pthread_mutex_t		thread_change_die;
+
 	pthread_mutex_t		*forks;
-} ;
+};
 //---------ENUMARATORS--------------------
 typedef enum e_print
 {
@@ -97,7 +95,8 @@ typedef enum e_print
 
 //----------------INIT--------------------
 int			init_table(int argc, char **argv, t_table *table);
-int			init_supervisor(int argc, char **argv, t_supervisor *s, t_table *table);
+int			init_supervisor(int argc, char **argv,
+				t_supervisor *s, t_table *table);
 int			init_many_philos(t_table *t);
 //----------------PARSING-----------------
 int			parsing(int argc, char **argv, t_table *t);
@@ -120,11 +119,13 @@ void		*supervisor(void *arg);
 //----------------ROUTINE_PHILOS_UTILS------
 void		philos_main_routine(t_philo *philo);
 void		philos_wait_to_start(t_philo *philo);
+int 		should_stop_simulation(t_table *table);
+void		update_last_time_meal(t_philo *philo);
 //----------------ROUTINE_SUPERVISOR--------
-void		died_condition(t_table *t, int	i);
 void		meals_update(t_table *t, int i);
 void		died_cond_and_meals_update(t_table *t);
 void		*supervisor(void *arg);
+void		died_condition(t_table *t, int	i);
 //----------------UTILS_ONE---------------
 long long	get_time_ms(void);
 long		ft_p_atol(char *str);
@@ -138,7 +139,4 @@ long long 	max(long long a, long long b);
 //----------------UTILS_THREE-------------
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
-int 		should_stop_simulation(t_table *table);
-void		update_time_philo(t_philo *philo);
-void		update_last_time_meal(t_philo *philo);
 #endif

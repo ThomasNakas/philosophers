@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 23:38:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 23:40:31 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:31:28 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,9 @@ int	ft_isdigit(int c)
 int	ft_isspace(char c)
 {
 	return ((((c >= 9) && (c <= 13)) || c == ' ' || c == '\n') * 1);
+}
+
+long long	max(long long a, long long b)
+{
+	return (a * (a >= b) + b * (a < b));
 }

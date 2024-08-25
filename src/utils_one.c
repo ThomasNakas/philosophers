@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:44 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:04:28 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:30:03 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,12 @@ long	ft_p_atol(char *str)
 	return (nbr);
 }
 
-//-----------------------MAYBE CHANGE-----------------------------
-void	print_status(t_philo *philo,char *status)
+void	print_status(t_philo *philo, char *status)
 {
 	printf("%lld %d %s\n", get_time_ms() - philo->table->start_tv,
 		philo-> id, status);
 }
 
-//-----------------------MAYBE CHANGE------------------------------
 void	print_with_enum(t_philo *philo, t_print mes)
 {
 	if (mes == FORK)

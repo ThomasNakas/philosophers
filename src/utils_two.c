@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 04:02:52 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:31:46 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	big_sixty_ms(int a)
 int	check_ms(int x, int y, int z)
 {
 	return (big_sixty_ms(x)
-		|| big_sixty_ms(y) 
+		|| big_sixty_ms(y)
 		|| big_sixty_ms(z));
 }
 
@@ -33,7 +33,7 @@ void	safe_destroy(t_table *table, int num)
 		pthread_mutex_destroy(&table->forks[i]);
 }
 
-void	print_thread_routine (t_philo *philo, t_print PRINT)
+void	print_thread_routine(t_philo *philo, t_print PRINT)
 {
 	if (should_stop_simulation(philo->table))
 		return ;
@@ -49,9 +49,4 @@ void	ft_sleep(long long routine_time)
 	start = get_time_ms();
 	while (get_time_ms() - start < routine_time)
 		usleep(200);
-}
-
-long long max(long long a, long long b)
-{
-	return(a * (a >= b) + b * (a < b));
 }

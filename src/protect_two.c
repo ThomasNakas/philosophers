@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 04:59:43 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:29:09 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	protected_create_one_philo(t_table *t)
 	t->arr_philos[0].start_time = get_time_ms();
 	t->arr_philos[0].run = 1;
 	t->arr_philos[0].is_counted = 0;
-	t->arr_philos[0].update_time = get_time_ms();
-	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine_one, &(t->arr_philos[0])))
+	if (pthread_create(&(t->arr_philos[0].thread),
+			NULL, routine_one, &(t->arr_philos[0])))
 	{
 		j = -1;
 		while (++j < t->n_of_philos)
@@ -33,7 +33,6 @@ int	protected_create_one_philo(t_table *t)
 		free(t->arr_philos);
 		pthread_mutex_destroy(&t->change_n_of_full);
 		pthread_mutex_destroy(&t->min_checker);
-		pthread_mutex_destroy(&t->thread_change_die);
 		pthread_mutex_destroy(&t->thread_print);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		free(t->forks);
@@ -60,7 +59,6 @@ int	protected_mutex_init(t_table *t, int i)
 		free(t->forks);
 		pthread_mutex_destroy(&t->change_n_of_full);
 		pthread_mutex_destroy(&t->min_checker);
-		pthread_mutex_destroy(&t->thread_change_die);
 		pthread_mutex_destroy(&t->thread_print);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		return (i + 13 + 3 * (t->n_of_philos));
@@ -91,7 +89,6 @@ int	protected_create_arr_philos(t_table *t, int i)
 		free(t->arr_philos);
 		pthread_mutex_destroy(&t->change_n_of_full);
 		pthread_mutex_destroy(&t->min_checker);
-		pthread_mutex_destroy(&t->thread_change_die);
 		pthread_mutex_destroy(&t->thread_print);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		free(t->forks);
@@ -117,7 +114,6 @@ int	protected_mutex_init_supervisor(t_supervisor *s)
 	free(s->table->forks);
 	pthread_mutex_destroy(&s->table->change_n_of_full);
 	pthread_mutex_destroy(&s->table->min_checker);
-	pthread_mutex_destroy(&s->table->thread_change_die);
 	pthread_mutex_destroy(&s->table->thread_print);
 	pthread_mutex_destroy(&s->table->thread_supervisor);
 	return (j + 14 + 3 * (s->table->n_of_philos));
@@ -138,7 +134,6 @@ int	final_clean(t_table *table)
 	free(table->forks);
 	pthread_mutex_destroy(&table->change_n_of_full);
 	pthread_mutex_destroy(&table->min_checker);
-	pthread_mutex_destroy(&table->thread_change_die);
 	pthread_mutex_destroy(&table->thread_print);
 	pthread_mutex_destroy(&table->thread_supervisor);
 	return (j + 14 + 3 * (table->n_of_philos));
