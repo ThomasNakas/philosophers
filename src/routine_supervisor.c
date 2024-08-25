@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 05:09:25 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 06:04:31 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	died_condition(t_table *t, int	i)
 void	meals_update(t_table *t, int i)
 {
 	pthread_mutex_lock(&t->arr_philos[i].routines);
-	if (t->min_meals <= t->arr_philos[i].meals)
+	if (t->min_meals <= t->arr_philos[i].meals && i % 2 )
 	{
 		t->n_of_full_philos++;
 		t->arr_philos[i].is_counted = 1;
