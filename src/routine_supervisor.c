@@ -6,13 +6,13 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:29:34 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:20:07 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	died_condition(t_table *t, int	i)
+void	died_condition(t_table *t, int i)
 {
 	t->print_flag = 1;
 	print_thread_routine(&t->arr_philos[i], DEAD);
@@ -68,9 +68,7 @@ void	*supervisor(void *arg)
 	died_cond_and_meals_update(t);
 	if (t->min_meals != -1
 		&& t->n_of_philos == t->n_of_full_philos)
-		{
-			t->stop_simulation = 1;
-		}
+		t->stop_simulation = 1;
 	usleep(1000);
 	return (NULL);
 }

@@ -6,15 +6,15 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:18:56 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 06:29:18 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:16:37 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int should_stop_simulation(t_table *table)
+int	should_stop_simulation(t_table *table)
 {
-	int res;
+	int	res;
 
 	pthread_mutex_lock((&table->thread_supervisor));
 	res = table->stop_simulation;

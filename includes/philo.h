@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 07:06:09 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:17:07 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int			big_sixty_ms(int a);
 int			check_ms(int x, int y, int z);
 void		print_thread_routine(t_philo *philo, t_print PRINT);
 void		ft_sleep(long long routine_time);
-long long 	max(long long a, long long b);
+long long	max(long long a, long long b);
 //----------------UTILS_THREE-------------
 int			ft_isdigit(int c);
 int			ft_isspace(char c);

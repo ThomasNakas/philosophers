@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 07:06:15 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:19:20 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,15 @@ int	protected_create_arr_philos(t_table *t, int i)
 	int	j;
 
 	j = -1;
-	if (pthread_create(&(t->arr_philos[i].thread), NULL, routine, &(t->arr_philos[i])))
+	if (pthread_create(&(t->arr_philos[i].thread),
+			NULL, routine, &(t->arr_philos[i])))
 	{
 		j = -1;
 		while (++j < t->n_of_philos)
-		{
-			pthread_mutex_destroy(&t->arr_philos[t->n_of_philos - j - 1].routines);
 			pthread_mutex_destroy(&t->forks[t->n_of_philos - j - 1]);
-		}
 		while (++j < t->n_of_philos)
-		{
-			pthread_mutex_destroy(&t->arr_philos[t->n_of_philos - j - 1].routines);
-			pthread_mutex_destroy(&t->forks[t->n_of_philos - j - 1]);
-		}
+			pthread_mutex_destroy(&t->arr_philos[t->n_of_philos
+				- j - 1].routines);
 		while (--i >= 0)
 			pthread_join((t->arr_philos[i].thread), NULL);
 		free(t->arr_philos);
