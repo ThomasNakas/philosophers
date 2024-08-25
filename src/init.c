@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:17:18 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 02:54:59 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,6 @@ int	init_many_philos(t_table *t)
 		t->arr_philos[i].meals = 0;
 		t->arr_philos[i].right_fork = i;
 		t->arr_philos[i].left_fork = (i + 1) % t->n_of_philos;
-		// t->arr_philos[i].right_fork = t->forks[i];
-		// t->arr_philos[i].left_fork
-		// 	= t->forks[t->arr_philos[i].id % t->n_of_philos];
 		t->arr_philos[i].table = t;
 		t->arr_philos[i].last_eat = 0;
 		t->arr_philos[i].run = 1;

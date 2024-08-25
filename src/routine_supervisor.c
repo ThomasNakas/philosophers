@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 00:31:16 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 02:50:19 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 void	died_condition(t_table *t, int	i)
 {
-	pthread_mutex_lock(&t->thread_print);
 	t->print_flag = 1;
-	pthread_mutex_unlock(&t->thread_print);
-	pthread_mutex_lock(&t->thread_print);
-	print_with_enum(&t->arr_philos[i], DEAD);
-	pthread_mutex_unlock(&t->thread_print);
+	print_thread_routine(&t->arr_philos[i], DEAD);
+	pthread_mutex_lock(&t->thread_supervisor);
 	t->stop_simulation = 1;
 	pthread_mutex_unlock(&t->thread_supervisor);
 }
@@ -44,6 +41,7 @@ void	died_cond_and_meals_update(t_table *t)
 		if ((t->die <= t->arr_philos[i].last_eat - t->arr_philos[i].prev_last)
 		&& (t->print_flag == 0))
 		{
+			pthread_mutex_unlock(&t->arr_philos[i].routines);
 			died_condition(t, i);
 			break ;
 		}
@@ -52,6 +50,8 @@ void	died_cond_and_meals_update(t_table *t)
 		if (t->min_meals != -1 && t->arr_philos[i].is_counted == 0)
 			meals_update(t, i);
 		pthread_mutex_unlock(&t->min_checker);
+		if (i == t->n_of_philos - 1)
+			i = 0;
 	}
 }
 
