@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:34 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:54:59 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 03:47:04 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ int	init_many_philos(t_table *t)
 		t->arr_philos[i].right_fork = i;
 		t->arr_philos[i].left_fork = (i + 1) % t->n_of_philos;
 		t->arr_philos[i].table = t;
-		t->arr_philos[i].last_eat = 0;
+		t->arr_philos[i].start_time = get_time_ms();
+		t->arr_philos[i].update_time = get_time_ms();
+		t->arr_philos[i].last_time_meal = get_time_ms();
 		t->arr_philos[i].run = 1;
 		t->arr_philos[i].is_counted = 0;
 		if (protected_mutex_init(t, i))

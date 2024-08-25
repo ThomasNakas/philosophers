@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:03:59 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:25:24 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 04:04:24 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ typedef struct s_philo
 
 	int				meals;
 	int				run;
-	long long		last_eat;
-	long long		prev_last;
+	long long		start_time;
+	long long		update_time;
+	long long		last_time_meal;
 	int				is_counted;
 
 	t_table			*table;
@@ -137,4 +138,7 @@ long long 	max(long long a, long long b);
 //----------------UTILS_THREE-------------
 int			ft_isdigit(int c);
 int			ft_isspace(char c);
+int 		should_stop_simulation(t_table *table);
+void		update_time_philo(t_philo *philo);
+void		update_last_time_meal(t_philo *philo);
 #endif

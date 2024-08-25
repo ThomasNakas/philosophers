@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:20:10 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 03:00:33 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	protected_create_one_philo(t_table *t)
 	t->arr_philos[0].meals = 0;
 	t->arr_philos[0].left_fork = 0;
 	t->arr_philos[0].table = t;
-	t->arr_philos[0].last_eat = 0;
+	t->arr_philos[0].start_time = 0;
 	t->arr_philos[0].run = 1;
 	t->arr_philos[0].is_counted = 0;
-	t->arr_philos[0].prev_last = 0;
+	t->arr_philos[0].update_time = 0;
 	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine_one, &(t->arr_philos[0])))
 	{
 		j = -1;

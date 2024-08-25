@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 02:50:19 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 04:15:26 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	died_condition(t_table *t, int	i)
 
 void	meals_update(t_table *t, int i)
 {
+	pthread_mutex_lock(&t->arr_philos[i].routines);
 	if (t->min_meals <= t->arr_philos[i].meals)
 	{
 		t->n_of_full_philos++;
 		t->arr_philos[i].is_counted = 1;
 	}
+	pthread_mutex_unlock(&t->arr_philos[i].routines);
 }
 
 void	died_cond_and_meals_update(t_table *t)
@@ -38,8 +40,9 @@ void	died_cond_and_meals_update(t_table *t)
 	while (++i < t->n_of_philos)
 	{
 		pthread_mutex_lock(&t->arr_philos[i].routines);
-		if ((t->die <= t->arr_philos[i].last_eat - t->arr_philos[i].prev_last)
+		if (get_time_ms() - t->die >= t->arr_philos[i].last_time_meal
 		&& (t->print_flag == 0))
+		// if ((t->die <= t->arr_philos[i]
 		{
 			pthread_mutex_unlock(&t->arr_philos[i].routines);
 			died_condition(t, i);

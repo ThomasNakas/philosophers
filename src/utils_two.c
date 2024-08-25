@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 22:54:33 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 04:02:52 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	safe_destroy(t_table *table, int num)
 
 void	print_thread_routine (t_philo *philo, t_print PRINT)
 {
+	if (should_stop_simulation(philo->table))
+		return ;
 	pthread_mutex_lock(&philo->table->thread_print);
 	print_with_enum(philo, PRINT);
 	pthread_mutex_unlock(&philo->table->thread_print);
