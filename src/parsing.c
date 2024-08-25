@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 21:53:36 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 07:22:37 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:41:34 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,19 @@ int	parsing(int argc, char **argv, t_table *t)
 	t->start_simulation = 0;
 	t->stop_simulation = 0;
 	return (0);
+}
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
+}
+
+int	ft_isspace(char c)
+{
+	return ((((c >= 9) && (c <= 13)) || c == ' ' || c == '\n') * 1);
+}
+
+long long	max(long long a, long long b)
+{
+	return (a * (a >= b) + b * (a < b));
 }
