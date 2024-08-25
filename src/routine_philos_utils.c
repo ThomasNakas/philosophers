@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 21:18:56 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 07:16:37 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 07:22:29 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	should_stop_simulation(t_table *table)
 	pthread_mutex_unlock((&table->thread_supervisor));
 	return (res);
 }
-
 
 void	update_last_time_meal(t_philo *philo)
 {
