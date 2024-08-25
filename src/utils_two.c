@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 03:36:17 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 18:04:08 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 22:54:33 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ void	safe_destroy(t_table *table, int num)
 	i = -1;
 	while (++i < num)
 		pthread_mutex_destroy(&table->forks[i]);
+}
+
+void	print_thread_routine (t_philo *philo, t_print PRINT)
+{
+	pthread_mutex_lock(&philo->table->thread_print);
+	print_with_enum(philo, PRINT);
+	pthread_mutex_unlock(&philo->table->thread_print);
 }
 
 void	ft_sleep(long long routine_time)

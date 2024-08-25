@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 01:33:25 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 12:00:39 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/24 23:52:50 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	protected_init_change_of_full(t_table *t)
 {
 	if (pthread_mutex_init(&t->change_n_of_full, NULL))
 	{
+		pthread_mutex_destroy(&t->min_checker);
 		pthread_mutex_destroy(&t->thread_change_die);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);

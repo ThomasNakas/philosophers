@@ -6,21 +6,20 @@
 #    By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/04 13:02:26 by tnakas            #+#    #+#              #
-#    Updated: 2024/08/24 12:29:08 by tnakas           ###   ########.fr        #
+#    Updated: 2024/08/24 23:41:40 by tnakas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror -I. -I$(LIBFT_DIR)
-LIBFT_DIR = libft
+CFLAGS = -g -Wall -Wextra -Werror -I.
 
 SRC = src/init.c src/main.c src/parsing.c src/protect_one.c src/protect_two.c \
-	src/routine.c src/utils_one.c src/utils_two.c \
+		src/routine_philos.c src/routine_philos_utils.c \
+		src/routine_supervisor.c src/utils_one.c src/utils_two.c \
+		src/utils_three.c \
 
 OBJ = $(SRC:.c=.o)
-
-LIBFT = $(LIBFT_DIR)/libft.a
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -30,15 +29,11 @@ RESET = \033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ)
 	@echo "$(BLUE)Linking $@...$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
 	@echo "$(GREEN)Executable $(NAME) created successfully!$(RESET)"
 
-$(LIBFT):
-	@echo "$(BLUE)Compiling libft...$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR) > /dev/null
-	@echo "$(GREEN)Library libft created successfully!$(RESET)"
 
 %.o: %.c
 	@echo "$(BLUE)Compiling $<...$(RESET)"
@@ -46,13 +41,11 @@ $(LIBFT):
 
 clean:
 	@echo "$(YELLOW)Cleaning object files...$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR) clean > /dev/null
 	@rm -f $(OBJ)
 	@echo "$(YELLOW)Cleaned up object files and temporary files.$(RESET)"
 
 fclean: clean
 	@echo "$(RED)Cleaning all build files...$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR) fclean > /dev/null
 	@rm -f $(NAME)
 	@echo "$(RED)Fully cleaned including executable and libraries.$(RESET)"
 

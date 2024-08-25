@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 22:13:04 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 20:33:35 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 02:20:10 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,16 @@ int	protected_create_one_philo(t_table *t)
 {
 	int	j;
 
-	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine, &(t->arr_philos[0])))
+	j = -1;
+	t->arr_philos[0].id = 1;
+	t->arr_philos[0].meals = 0;
+	t->arr_philos[0].left_fork = 0;
+	t->arr_philos[0].table = t;
+	t->arr_philos[0].last_eat = 0;
+	t->arr_philos[0].run = 1;
+	t->arr_philos[0].is_counted = 0;
+	t->arr_philos[0].prev_last = 0;
+	if (pthread_create(&(t->arr_philos[0].thread), NULL, routine_one, &(t->arr_philos[0])))
 	{
 		j = -1;
 		while (++j < t->n_of_philos)
@@ -30,32 +39,6 @@ int	protected_create_one_philo(t_table *t)
 		free(t->forks);
 		return (11 + t->n_of_philos);
 	}
-	pthread_join(t->arr_philos[0].thread, NULL);
-	return (0);
-}
-
-int	protected_create_arr_philos(t_table *t, int i)
-{
-	int	j;
-
-	j = -1;
-	if (pthread_create(&(t->arr_philos[i].thread), NULL, routine, &(t->arr_philos[i])))
-	{
-		j = -1;
-		printf("here2\n");
-		while (++j < t->n_of_philos)
-			pthread_mutex_destroy(&t->forks[i]);
-		while (--i >= 0)
-			pthread_join((t->arr_philos[i].thread), NULL);
-		free(t->arr_philos);
-		pthread_mutex_destroy(&t->change_n_of_full);
-		pthread_mutex_destroy(&t->min_checker);
-		pthread_mutex_destroy(&t->thread_change_die);
-		pthread_mutex_destroy(&t->thread_print);
-		pthread_mutex_destroy(&t->thread_supervisor);
-		free(t->forks);
-		return (i + 12 + 2 * (t->n_of_philos));
-	}
 	return (0);
 }
 
@@ -67,13 +50,14 @@ int	protected_mutex_init(t_table *t, int i)
 	if (pthread_mutex_init(&t->arr_philos[i].routines, NULL))
 	{
 		while (--i >= 0)
+		{
+			pthread_join((t->arr_philos[i].thread), NULL);
 			pthread_mutex_destroy(&t->arr_philos[i].routines);
-		while (i-- > 0)
-			pthread_join( (t->arr_philos[i].thread), NULL);
+		}
 		free(t->arr_philos);
 		j = -1;
 		while (++j < t->n_of_philos)
-			pthread_mutex_destroy(&t->forks[i]);
+			pthread_mutex_destroy(&t->forks[j]);
 		free(t->forks);
 		pthread_mutex_destroy(&t->change_n_of_full);
 		pthread_mutex_destroy(&t->min_checker);
@@ -81,6 +65,33 @@ int	protected_mutex_init(t_table *t, int i)
 		pthread_mutex_destroy(&t->thread_print);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		return (i + 13 + 3 * (t->n_of_philos));
+	}
+	return (0);
+}
+
+int	protected_create_arr_philos(t_table *t, int i)
+{
+	int	j;
+
+	j = -1;
+	if (pthread_create(&(t->arr_philos[i].thread), NULL, routine, &(t->arr_philos[i])))
+	{
+		j = -1;
+		while (++j < t->n_of_philos)
+		{
+			pthread_mutex_destroy(&t->arr_philos[i].routines);
+			pthread_mutex_destroy(&t->forks[i]);
+		}
+		while (--i >= 0)
+			pthread_join((t->arr_philos[i].thread), NULL);
+		free(t->arr_philos);
+		pthread_mutex_destroy(&t->change_n_of_full);
+		pthread_mutex_destroy(&t->min_checker);
+		pthread_mutex_destroy(&t->thread_change_die);
+		pthread_mutex_destroy(&t->thread_print);
+		pthread_mutex_destroy(&t->thread_supervisor);
+		free(t->forks);
+		return (i + 12 + 2 * (t->n_of_philos));
 	}
 	return (0);
 }

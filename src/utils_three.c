@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   utils_three.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/11 02:59:21 by tnakas            #+#    #+#             */
-/*   Updated: 2024/05/11 03:00:48 by tnakas           ###   ########.fr       */
+/*   Created: 2024/08/24 23:38:17 by tnakas            #+#    #+#             */
+/*   Updated: 2024/08/24 23:40:31 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/philo.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_isdigit(int c)
 {
-	size_t	i;
+	return (c >= '0' && c <= '9');
+}
 
-	i = 0;
-	while (*(s1 + i) || *(s2 + i))
-	{
-		if (*(s1 + i) != *(s2 + i))
-			return ((unsigned char)(*(s1 + i)) -(unsigned char)(*(s2 + i)));
-		i++;
-	}
-	return (0);
+int	ft_isspace(char c)
+{
+	return ((((c >= 9) && (c <= 13)) || c == ' ' || c == '\n') * 1);
 }

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:44 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/24 14:18:56 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 02:04:28 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_with_enum(t_philo *philo, t_print mes)
 	else if (mes == SLEEP)
 		print_status(philo, BLUE"is sleeping"RESET);
 	else if (mes == THINK)
-		print_status(philo, MAGENTA"is_thinking"RESET);
+		print_status(philo, MAGENTA"is thinking"RESET);
 	else
 		print_status(philo, RED"died"RESET);
 }
