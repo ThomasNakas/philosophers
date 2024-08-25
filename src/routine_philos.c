@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 13:02:40 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 04:27:26 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 05:18:19 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	*routine_one(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *) arg;
-	pthread_mutex_lock(&philo->table->forks[philo->left_fork]);
-	print_thread_routine(philo, FORK);
-	pthread_mutex_lock(&philo->routines);
-	philo->last_time_meal = get_time_ms();
-	pthread_mutex_unlock(&philo->routines);
-	pthread_mutex_unlock(&philo->table->forks[philo->left_fork]);
+		pthread_mutex_lock(&philo->table->forks[philo->right_fork]);
+		print_thread_routine(philo, FORK);
+		pthread_mutex_unlock(&philo->table->forks[philo->right_fork]);
+		while(should_stop_simulation(philo->table))
+		{
+			ft_sleep(100);
+			update_last_time_meal(philo);
+		}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 20:50:14 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 04:15:26 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 05:09:25 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	meals_update(t_table *t, int i)
 	{
 		t->n_of_full_philos++;
 		t->arr_philos[i].is_counted = 1;
+		pthread_mutex_lock(&t->thread_supervisor);
+		t->stop_simulation = 1;
+		pthread_mutex_unlock(&t->thread_supervisor);
 	}
 	pthread_mutex_unlock(&t->arr_philos[i].routines);
 }
@@ -40,9 +43,8 @@ void	died_cond_and_meals_update(t_table *t)
 	while (++i < t->n_of_philos)
 	{
 		pthread_mutex_lock(&t->arr_philos[i].routines);
-		if (get_time_ms() - t->die >= t->arr_philos[i].last_time_meal
+		if (get_time_ms() - t->die > t->arr_philos[i].last_time_meal
 		&& (t->print_flag == 0))
-		// if ((t->die <= t->arr_philos[i]
 		{
 			pthread_mutex_unlock(&t->arr_philos[i].routines);
 			died_condition(t, i);
