@@ -6,7 +6,7 @@
 /*   By: tnakas <tnakas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 01:33:25 by tnakas            #+#    #+#             */
-/*   Updated: 2024/08/25 18:12:02 by tnakas           ###   ########.fr       */
+/*   Updated: 2024/08/25 18:17:12 by tnakas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 int	protected_init_from_print_to_change_die(t_table *t)
 {
 	if (pthread_mutex_init(&t->thread_print, NULL))
+	{
+		printf("Error: Mutex init failed");
 		return (3);
+	}
 	if (pthread_mutex_init(&t->thread_supervisor, NULL))
 	{
 		pthread_mutex_destroy(&t->thread_print);
+		printf("Error: Mutex init failed");
 		return (4);
 	}
 	if (pthread_mutex_init(&t->min_checker, NULL))
 	{
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);
+		printf("Error: Mutex init failed");
 		return (6);
 	}
 	return (0);
@@ -37,6 +42,7 @@ int	protected_init_change_of_full(t_table *t)
 		pthread_mutex_destroy(&t->min_checker);
 		pthread_mutex_destroy(&t->thread_supervisor);
 		pthread_mutex_destroy(&t->thread_print);
+		printf("Error: Mutex init failed");
 		return (7);
 	}
 	return (0);
